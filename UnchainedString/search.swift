@@ -158,9 +158,18 @@ public extension String {
             // if self is shorter than the prefix
             return false
         }
+		if prefix.characters.count == 1 {
+			// single char prefix is simple
+			return self.characters.first! == prefix.characters.first!
+		}
         
         // quick check if first and last char match
         if self.characters.first! == prefix.characters.first! && self.characters[self.startIndex.advancedBy(prefix.characters.count - 1)] == prefix.characters.last! {
+			// if prefix length == 2 instantly return true
+			if prefix.characters.count == 2 {
+				return true
+			}
+
             // match, thorough check
             var selfIndex = self.startIndex.successor()
             var prefixIndex = prefix.startIndex.successor()
@@ -191,9 +200,18 @@ public extension String {
             // if self is shorter than the suffix
             return false
         }
+		if suffix.characters.count == 1 {
+			// single char prefix is simple
+			return self.characters.last! == suffix.characters.first!
+		}
         
         // quick check if first and last char match
         if self.characters.last! == suffix.characters.last! && self.characters[self.startIndex.advancedBy(self.characters.count - suffix.characters.count)] == suffix.characters.first! {
+			// if suffix length == 2 instantly return true
+			if suffix.characters.count == 2 {
+				return true
+			}
+			
             // match, thorough check
             var selfIndex = self.startIndex.advancedBy(self.characters.count - suffix.characters.count + 1)
             var suffixIndex = suffix.startIndex.successor()
