@@ -1,2 +1,4 @@
 Packages/
 .build
+.atllbuild
+bin

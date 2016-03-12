@@ -11,7 +11,7 @@ import XCTest
 @testable import UnchainedString
 
 class splitTests: XCTestCase {
-    var allTests : [(String, () -> Void)] {
+    var allTests : [(String, () throws -> Void)] {
         return [
             ("testJoinWithString", testJoinWithString),
             ("testJoinWithStringAndEmptyArray", testJoinWithStringAndEmptyArray),
@@ -31,56 +31,56 @@ class splitTests: XCTestCase {
         ]
     }
     
-    func testJoinWithString() {
+    func testJoinWithString() throws {
         let result = String.join(["Item 0", "Item 1", "Item 2"], delimiter: ", ")
         XCTAssert(result == "Item 0, Item 1, Item 2")
     }
 
-    func testJoinWithStringAndEmptyArray() {
+    func testJoinWithStringAndEmptyArray() throws {
         let result = String.join([String](), delimiter: ", ")
         XCTAssert(result == "")
     }
 
-    func testJoinWithStringAndSingleItemArray() {
+    func testJoinWithStringAndSingleItemArray() throws {
         let result = String.join(["Test"], delimiter: ", ")
         XCTAssert(result == "Test")
     }
 
-    func testJoinWithEmptyString() {
+    func testJoinWithEmptyString() throws {
         let delim: String = ""
         let result = String.join(["Item 0", "Item 1", "Item 2"], delimiter: delim)
         XCTAssert(result == "Item 0Item 1Item 2")
     }
 
-    func testJoinWithEmptyStringAndEmptyArray() {
+    func testJoinWithEmptyStringAndEmptyArray() throws {
         let delim: String = ""
         let result = String.join([String](), delimiter: delim)
         XCTAssert(result == "")
     }
 
-    func testJoinWithChar() {
+    func testJoinWithChar() throws {
         let delim: Character = ","
         let result = String.join(["Item 0", "Item 1", "Item 2"], delimiter: delim)
         XCTAssert(result == "Item 0,Item 1,Item 2")
     }
 
-    func testJoinWithCharAndEmptyArray() {
+    func testJoinWithCharAndEmptyArray() throws {
         let delim: Character = ","
         let result = String.join([String](), delimiter: delim)
         XCTAssert(result == "")
     }
 
-    func testJoin() {
+    func testJoin() throws {
         let result = String.join(["Item 0", "Item 1", "Item 2"])
         XCTAssert(result == "Item 0Item 1Item 2")
     }
 
-    func testJoinWithEmptyArray() {
+    func testJoinWithEmptyArray() throws {
         let result = String.join([String]())
         XCTAssert(result == "")
     }
     
-    func testSplitByDelimiterChar() {
+    func testSplitByDelimiterChar() throws {
         let delim: Character = ","
         let result = "Item 0,Item 1,Item 2".split(delim)
         XCTAssert(result.count == 3)
@@ -91,7 +91,7 @@ class splitTests: XCTestCase {
         }
     }
 
-    func testSplitByDelimiterCharAndEmptyString() {
+    func testSplitByDelimiterCharAndEmptyString() throws {
         let delim: Character = ","
         let result = "".split(delim)
         XCTAssert(result.count == 1)
@@ -100,7 +100,7 @@ class splitTests: XCTestCase {
         }
     }
     
-    func testSplitByDelimiterCharMaxsplit() {
+    func testSplitByDelimiterCharMaxsplit() throws {
         let delim: Character = ","
         let result = "Item 0,Item 1,Item 2,Item 3".split(delim, maxSplits: 2)
         XCTAssert(result.count == 3)
@@ -111,7 +111,7 @@ class splitTests: XCTestCase {
         }
     }
 
-    func testSplitByDelimiterString() {
+    func testSplitByDelimiterString() throws {
         let result = "Item 0, Item 1, Item 2".split(", ")
         XCTAssert(result.count == 3)
         if result.count == 3 {
@@ -121,7 +121,7 @@ class splitTests: XCTestCase {
         }
     }
     
-    func testSplitByDelimiterStringAndEmptyString() {
+    func testSplitByDelimiterStringAndEmptyString() throws {
         let result = "".split(", ")
         XCTAssert(result.count == 1)
         if result.count == 1 {
@@ -129,7 +129,7 @@ class splitTests: XCTestCase {
         }
     }
     
-    func testSplitByDelimiterStringMaxsplit() {
+    func testSplitByDelimiterStringMaxsplit() throws {
         let result = "Item 0, Item 1, Item 2, Item 3".split(", ", maxSplits: 2)
         XCTAssert(result.count == 3)
         if result.count == 3 {

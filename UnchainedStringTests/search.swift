@@ -11,7 +11,7 @@ import XCTest
 @testable import UnchainedString
 
 class searchTests: XCTestCase {
-    var allTests : [(String, () -> Void)] {
+    var allTests : [(String, () throws -> Void)] {
         return [
             ("testPositionOfChar", testPositionOfChar),
             ("testPositionOfCharNotFound", testPositionOfCharNotFound),
@@ -31,22 +31,12 @@ class searchTests: XCTestCase {
             ("testContainsCharNotFound", testContainsCharNotFound),
             ("testContainsString", testContainsString),
             ("testContainsStringNotFound", testContainsStringNotFound),
-            ("testHasPrefix", testHasPrefix),
-            ("testHasPrefixNotFound", testHasPrefixNotFound),
-            ("testHasEmptyPrefix", testHasEmptyPrefix),
-            ("testHasTooLongPrefix", testHasTooLongPrefix),
-            ("testHasPrefixAlike", testHasPrefixAlike),
-            ("testHasSuffix", testHasSuffix),
-            ("testHasSuffixNotFound", testHasSuffixNotFound),
-            ("testHasEmptySuffix", testHasEmptySuffix),
-            ("testHasTooLongSuffix", testHasTooLongSuffix),
-            ("testHasSuffixAlike", testHasSuffixAlike)
         ]
     }
     
     // MARK: Position of char
     
-    func testPositionOfChar() {
+    func testPositionOfChar() throws {
         let c: Character = "."
         let s = "Just a string with a . in it"
         if let result = s.position(c) {
@@ -56,7 +46,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionOfCharNotFound() {
+    func testPositionOfCharNotFound() throws {
         let c: Character = "!"
         let s = "Just a string with a . in it"
         if let _ = s.position(c) {
@@ -64,7 +54,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionOfCharReverse() {
+    func testPositionOfCharReverse() throws {
         let c: Character = "i"
         let s = "Just a string with a . in it"
         if let result = s.position(c, reverse: true) {
@@ -74,7 +64,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionOfCharStartIndex() {
+    func testPositionOfCharStartIndex() throws {
         let c: Character = "i"
         let s = "Just a string with a . in it"
         if let result = s.position(c, index: s.startIndex.advancedBy(22)) {
@@ -84,7 +74,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionOfCharStartIndexReverse() {
+    func testPositionOfCharStartIndexReverse() throws {
         let c: Character = "i"
         let s = "Just a string with a . in it"
         if let result = s.position(c, index: s.startIndex.advancedBy(25), reverse: true) {
@@ -94,7 +84,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionsOfChar() {
+    func testPositionsOfChar() throws {
         let c: Character = "i"
         let s = "Just a string with a . in it"
         let result = s.positions(c)
@@ -107,7 +97,7 @@ class searchTests: XCTestCase {
         }
     }
 
-    func testPositionsOfCharNotFound() {
+    func testPositionsOfCharNotFound() throws {
         let c: Character = "!"
         let s = "Just a string with a . in it"
         let result = s.positions(c)
@@ -116,7 +106,7 @@ class searchTests: XCTestCase {
 
     // MARK: Position of string
     
-    func testPositionOfString() {
+    func testPositionOfString() throws {
         let n = "a "
         let s = "Just a string with a . in it"
         if let result = s.position(n) {
@@ -126,7 +116,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionOfStringNotFound() {
+    func testPositionOfStringNotFound() throws {
         let n = "! "
         let s = "Just a string with a . in it"
         if let _ = s.position(n) {
@@ -134,7 +124,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionOfStringReverse() {
+    func testPositionOfStringReverse() throws {
         let n = "a "
         let s = "Just a string with a . in it"
         if let result = s.position(n, reverse: true) {
@@ -144,7 +134,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionOfStringStartIndex() {
+    func testPositionOfStringStartIndex() throws {
         let n = "a "
         let s = "Just a string with a . in it"
         if let result = s.position(n, index: s.startIndex.advancedBy(10)) {
@@ -154,7 +144,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionOfStringStartIndexReverse() {
+    func testPositionOfStringStartIndexReverse() throws {
         let n = "a "
         let s = "Just a string with a . in it"
         if let result = s.position(n, index: s.startIndex.advancedBy(10), reverse: true) {
@@ -164,7 +154,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionsOfString() {
+    func testPositionsOfString() throws {
         let n = "a "
         let s = "Just a string with a . in it"
         let result = s.positions(n)
@@ -175,7 +165,7 @@ class searchTests: XCTestCase {
         }
     }
     
-    func testPositionsOfStringNotFound() {
+    func testPositionsOfStringNotFound() throws {
         let n = "! "
         let s = "Just a string with a . in it"
         let result = s.positions(n)
@@ -184,81 +174,28 @@ class searchTests: XCTestCase {
     
     // MARK: Contains
 
-    func testContainsChar() {
+    func testContainsChar() throws {
         let c: Character = "."
         let s = "Just a string with a . in it"
         XCTAssertTrue(s.contains(c))
     }
 
-    func testContainsCharNotFound() {
+    func testContainsCharNotFound() throws {
         let c: Character = "!"
         let s = "Just a string with a . in it"
         XCTAssertFalse(s.contains(c))
     }
 
-    func testContainsString() {
+    func testContainsString() throws {
         let n = "in"
         let s = "Just a string with a . in it"
         XCTAssertTrue(s.contains(n))
     }
     
-    func testContainsStringNotFound() {
+    func testContainsStringNotFound() throws {
         let n = "out"
         let s = "Just a string with a . in it"
         XCTAssertFalse(s.contains(n))
     }
 
-    // MARK: Prefix
-    
-    func testHasPrefix() {
-        let s = "Just a string with a . in it"
-        XCTAssertTrue(s.isPrefixed("Just"))
-    }
-    
-    func testHasPrefixNotFound() {
-        let s = "Just a string with a . in it"
-        XCTAssertFalse(s.isPrefixed("Foobar"))
-    }
-
-    func testHasEmptyPrefix() {
-        let s = "Just a string with a . in it"
-        XCTAssertTrue(s.isPrefixed(""))
-    }
-    
-    func testHasTooLongPrefix() {
-        let s = "Just"
-        XCTAssertFalse(s.isPrefixed("Just a long prefix"))
-    }
-
-    func testHasPrefixAlike() {
-        let s = "Just a string with a . in it"
-        XCTAssertFalse(s.isPrefixed("Just a  thing"))
-    }
-    
-    // MARK: Suffix
-
-    func testHasSuffix() {
-        let s = "Just a string with a . in it"
-        XCTAssertTrue(s.isSuffixed("in it"))
-    }
-    
-    func testHasSuffixNotFound() {
-        let s = "Just a string with a . in it"
-        XCTAssertFalse(s.isSuffixed("foobar"))
-    }
-    
-    func testHasEmptySuffix() {
-        let s = "Just a string with a . in it"
-        XCTAssertTrue(s.isSuffixed(""))
-    }
-    
-    func testHasTooLongSuffix() {
-        let s = "Just"
-        XCTAssertFalse(s.isSuffixed("Just a long prefix"))
-    }
-    
-    func testHasSuffixAlike() {
-        let s = "Just a string with a . in it"
-        XCTAssertFalse(s.isSuffixed(". of it"))
-    }
 }

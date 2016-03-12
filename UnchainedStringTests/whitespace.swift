@@ -13,7 +13,7 @@ import XCTest
 @testable import UnchainedString
 
 class whitespaceTests: XCTestCase {
-    var allTests : [(String, () -> Void)] {
+    var allTests : [(String, () throws -> Void)] {
         return [
             ("testWhitespaceAtBeginning", testWhitespaceAtBeginning),
             ("testWhitespaceAtEnd", testWhitespaceAtEnd),
@@ -22,22 +22,22 @@ class whitespaceTests: XCTestCase {
         ]
     }
     
-    func testWhitespaceAtBeginning() {
+    func testWhitespaceAtBeginning() throws {
         let s = "\n \t whitespace"
         XCTAssert(s.stringByTrimmingWhitespace() == "whitespace")
     }
     
-    func testWhitespaceAtEnd() {
+    func testWhitespaceAtEnd() throws {
         let s = "whitespace\n \t "
         XCTAssert(s.stringByTrimmingWhitespace() == "whitespace")
     }
     
-    func testWhitespaceAtBeginningAndEnd() {
+    func testWhitespaceAtBeginningAndEnd() throws {
         let s = "  \n \t \r\nwhitespace\n \t "
         XCTAssert(s.stringByTrimmingWhitespace() == "whitespace")
     }
     
-    func testNoWhitespace() {
+    func testNoWhitespace() throws {
         let s = "whitespace"
         XCTAssert(s.stringByTrimmingWhitespace() == "whitespace")
     }

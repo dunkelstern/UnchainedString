@@ -13,7 +13,7 @@ import XCTest
 @testable import UnchainedString
 
 class replaceTests: XCTestCase {
-    var allTests : [(String, () -> Void)] {
+    var allTests : [(String, () throws -> Void)] {
         return [
             ("testNewStringSubstring", testNewStringSubstring),
             ("testNewStringSubstringWithEmpty", testNewStringSubstringWithEmpty),
@@ -23,58 +23,58 @@ class replaceTests: XCTestCase {
     
     // MARK: New strings
     
-    func testNewStringSubstring() {
+    func testNewStringSubstring() throws {
         let s = "Hello World!"
         XCTAssert(s.stringByReplacing("World", replacement: "You") == "Hello You!")
     }
 
-    func testNewStringSubstringWithEmpty() {
+    func testNewStringSubstringWithEmpty() throws {
         let s = "Hello World!"
         XCTAssert(s.stringByReplacing(" World", replacement: "") == "Hello!")
     }
 
-    func testNewStringEmptySubstring() {
+    func testNewStringEmptySubstring() throws {
         let s = "Hello World!"
         XCTAssert(s.stringByReplacing("", replacement: "You") == "Hello World!")
     }
 
-    func testNewStringRange() {
+    func testNewStringRange() throws {
         let s = "Hello World!"
         XCTAssert(s.stringByReplacing(s.startIndex.advancedBy(6)..<s.startIndex.advancedBy(6+5), replacement: "You") == "Hello You!")
     }
     
-    func testNewStringRangeWithEmpty() {
+    func testNewStringRangeWithEmpty() throws {
         let s = "Hello World!"
         XCTAssert(s.stringByReplacing(s.startIndex.advancedBy(5)..<s.startIndex.advancedBy(6+5), replacement: "") == "Hello!")
     }
 
     // MARK: String modification
     
-    func testModifySubstring() {
+    func testModifySubstring() throws {
         var s = "Hello World!"
         s.replace("World", replacement: "You")
         XCTAssert(s == "Hello You!")
     }
     
-    func testModifySubstringWithEmpty() {
+    func testModifySubstringWithEmpty() throws {
         var s = "Hello World!"
         s.replace(" World", replacement: "")
         XCTAssert(s == "Hello!")
     }
     
-    func testModifyEmptySubstring() {
+    func testModifyEmptySubstring() throws {
         var s = "Hello World!"
         s.replace("", replacement: "You")
         XCTAssert(s == "Hello World!")
     }
     
-    func testModifyRange() {
+    func testModifyRange() throws {
         var s = "Hello World!"
         s.replace(s.startIndex.advancedBy(6)..<s.startIndex.advancedBy(6+5), replacement: "You")
         XCTAssert(s == "Hello You!")
     }
     
-    func testModifyRangeWithEmpty() {
+    func testModifyRangeWithEmpty() throws {
         var s = "Hello World!"
         s.replace(s.startIndex.advancedBy(5)..<s.startIndex.advancedBy(6+5), replacement: "")
         XCTAssert(s == "Hello!")

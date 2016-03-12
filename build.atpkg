@@ -1,0 +1,38 @@
+(package
+  :name "UnchainedString"
+  
+  :tasks {
+    :lib {
+      :tool "atllbuild"
+      :sources ["UnchainedString/**.swift"]
+      :name "UnchainedString"
+      :output-type "static-library"
+      :publish-product true
+      :compile-options ["-enable-testing"]
+    }
+
+    :unchained-string-tests {
+      :tool "atllbuild"
+      :dependencies ["lib"]
+      :sources ["UnchainedStringTests/**.swift"]
+      :name "unchained_string_tests"
+      :output-type "executable"
+      :link-with ["UnchainedString.a"]
+      :xctestify true
+      :xctest-strict true
+    }
+
+    :run-tests {
+      :tool "xctestrun"
+      :dependencies ["unchained-string-tests"]
+      :test-executable ".atllbuild/products/unchained_string_tests"
+    }
+
+    :check {
+      :dependencies ["unchained-string-tests"]
+      :tool "nop"
+    }
+
+  }
+
+)
