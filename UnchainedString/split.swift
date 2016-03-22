@@ -27,10 +27,10 @@ public extension String {
         result.reserveCapacity(len)
         
         // join string parts
-        for (idx, part) in parts.enumerate() {
-            result.appendContentsOf(part)
+        for (idx, part) in parts.enumerated() {
+            result.append(part)
             if idx < parts.count - 1 {
-                result.appendContentsOf(delimiter)
+                result.append(delimiter)
             }
         }
         
@@ -55,8 +55,8 @@ public extension String {
         result.reserveCapacity(len)
         
         // join string parts
-        for (idx, part) in parts.enumerate() {
-            result.appendContentsOf(part)
+        for (idx, part) in parts.enumerated() {
+            result.append(part)
             if idx < parts.count - 1 {
                 result.append(delimiter)
             }
@@ -83,7 +83,7 @@ public extension String {
 
         // join string parts
         for part in parts {
-            result.appendContentsOf(part)
+            result.append(part)
         }
         
         return result
@@ -103,7 +103,7 @@ public extension String {
     
         // create generator and add current char to `current`
         var i = 0
-        var gen = self.characters.generate()
+        var gen = self.characters.makeIterator()
         while let c = gen.next() {
             if c == character && ((maxSplits == 0) || (result.count < maxSplits)) {
                 // if we don't have reached maxSplits or maxSplits is zero and the current character is a delimiter
@@ -134,7 +134,7 @@ public extension String {
         var start = self.startIndex
         for idx in positions {
             result.append(self.subString(start..<idx))
-            start = idx.advancedBy(string.characters.count)
+            start = idx.advanced(by: string.characters.count)
             if result.count == maxSplits {
                 break
             }

@@ -13,14 +13,7 @@ import XCTest
 @testable import UnchainedString
 
 class replaceTests: XCTestCase {
-    var allTests : [(String, () throws -> Void)] {
-        return [
-            ("testNewStringSubstring", testNewStringSubstring),
-            ("testNewStringSubstringWithEmpty", testNewStringSubstringWithEmpty),
-            ("testNewStringEmptySubstring", testNewStringEmptySubstring)
-        ]
-    }
-    
+   
     // MARK: New strings
     
     func testNewStringSubstring() throws {
@@ -40,12 +33,12 @@ class replaceTests: XCTestCase {
 
     func testNewStringRange() throws {
         let s = "Hello World!"
-        XCTAssert(s.stringByReplacing(s.startIndex.advancedBy(6)..<s.startIndex.advancedBy(6+5), replacement: "You") == "Hello You!")
+        XCTAssert(s.stringByReplacing(s.startIndex.advanced(by: 6)..<s.startIndex.advanced(by: 6+5), replacement: "You") == "Hello You!")
     }
     
     func testNewStringRangeWithEmpty() throws {
         let s = "Hello World!"
-        XCTAssert(s.stringByReplacing(s.startIndex.advancedBy(5)..<s.startIndex.advancedBy(6+5), replacement: "") == "Hello!")
+        XCTAssert(s.stringByReplacing(s.startIndex.advanced(by: 5)..<s.startIndex.advanced(by: 6+5), replacement: "") == "Hello!")
     }
 
     // MARK: String modification
@@ -70,16 +63,25 @@ class replaceTests: XCTestCase {
     
     func testModifyRange() throws {
         var s = "Hello World!"
-        s.replace(s.startIndex.advancedBy(6)..<s.startIndex.advancedBy(6+5), replacement: "You")
+        s.replace(s.startIndex.advanced(by: 6)..<s.startIndex.advanced(by: 6+5), replacement: "You")
         XCTAssert(s == "Hello You!")
     }
     
     func testModifyRangeWithEmpty() throws {
         var s = "Hello World!"
-        s.replace(s.startIndex.advancedBy(5)..<s.startIndex.advancedBy(6+5), replacement: "")
+        s.replace(s.startIndex.advanced(by: 5)..<s.startIndex.advanced(by: 6+5), replacement: "")
         XCTAssert(s == "Hello!")
-    }
-
-    
-
+    }  
 }
+
+#if os(Linux) 
+extension replaceTests {
+    static var allTests : [(String, replaceTests -> () throws -> Void)] {
+        return [
+            ("testNewStringSubstring", testNewStringSubstring),
+            ("testNewStringSubstringWithEmpty", testNewStringSubstringWithEmpty),
+            ("testNewStringEmptySubstring", testNewStringEmptySubstring)
+        ]
+    }
+}
+#endif

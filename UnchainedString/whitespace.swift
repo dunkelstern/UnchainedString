@@ -26,19 +26,19 @@ public extension String {
         }
         
         var startIndex:String.CharacterView.Index = self.startIndex
-        for c in self.characters.enumerate() {
-            if !isWhitespace(c.element) {
-                startIndex = self.startIndex.advancedBy(c.index)
+        for (index, c) in self.characters.enumerated() {
+            if !isWhitespace(c) {
+                startIndex = self.startIndex.advanced(by: index)
                 break
             }
         }
         
-        var endIndex = self.endIndex.advancedBy(-1)
+        var endIndex = self.endIndex.advanced(by: -1)
         for _ in 0..<self.characters.count {
             if !isWhitespace(self.characters[endIndex]) {
                 break
             }
-            endIndex = endIndex.advancedBy(-1)
+            endIndex = endIndex.advanced(by: -1)
         }
         
         return self.subString(startIndex...endIndex)

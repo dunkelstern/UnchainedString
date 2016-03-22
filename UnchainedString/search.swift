@@ -62,13 +62,13 @@ public extension String {
         }
 
         if reverse {
-            if index != nil && self.startIndex.distanceTo(index!) < string.characters.count {
+            if index != nil && self.startIndex.distance(to: index!) < string.characters.count {
                 // can not find match because string is too short for match
                 return nil
             }
             
             // start with index/self.endIndex and go back
-            var i = (index == nil) ? self.endIndex.advancedBy(-string.characters.count) : index!
+            var i = (index == nil) ? self.endIndex.advanced(by: -string.characters.count) : index!
             while i >= self.startIndex {
 
                 var idx = i
@@ -88,14 +88,14 @@ public extension String {
                 i = i.predecessor()
             }
         } else {
-            if index != nil && index!.distanceTo(self.endIndex) < string.characters.count {
+            if index != nil && index!.distance(to: self.endIndex) < string.characters.count {
                 // can not find match because string is too short for match
                 return nil
             }
             let start = (index == nil) ? self.startIndex : index!
             
             // iterate from start to end - search string length
-            for i in start..<self.endIndex.advancedBy(-string.characters.count) {
+            for i in start..<self.endIndex.advanced(by: -string.characters.count) {
                 var idx = i
                 
                 // compare substring

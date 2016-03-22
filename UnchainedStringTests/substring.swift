@@ -11,18 +11,10 @@ import XCTest
 @testable import UnchainedString
 
 class substringTests: XCTestCase {
-    var allTests : [(String, () throws -> Void)] {
-        return [
-            ("testSubstring", testSubstring),
-            ("testSubstringFullRange", testSubstringFullRange),
-            ("testSubstringToIndex", testSubstringToIndex),
-            ("testSubstringFromIndex", testSubstringFromIndex),
-        ]
-    }
     
     func testSubstring() throws {
         let s = "Extract (a rather unimportant) substring"
-        let substring = s.subString(s.startIndex.advancedBy(8)...s.startIndex.advancedBy(29))
+        let substring = s.subString(s.startIndex.advanced(by: 8)...s.startIndex.advanced(by: 29))
         XCTAssert(substring == "(a rather unimportant)")
     }
     
@@ -34,13 +26,26 @@ class substringTests: XCTestCase {
     
     func testSubstringToIndex() throws {
         let s = "Extract (a rather unimportant) substring"
-        let substring = s.subString(toIndex: s.startIndex.advancedBy(8))
+        let substring = s.subString(toIndex: s.startIndex.advanced(by: 8))
         XCTAssert(substring == "Extract ")
     }
     
     func testSubstringFromIndex() throws {
         let s = "Extract (a rather unimportant) substring"
-        let substring = s.subString(fromIndex: s.startIndex.advancedBy(8))
+        let substring = s.subString(fromIndex: s.startIndex.advanced(by: 8))
         XCTAssert(substring == "(a rather unimportant) substring")
     }
 }
+
+#if os(Linux)
+extension substringTests {
+    static var allTests : [(String, substringTests -> () throws -> Void)] {
+        return [
+            ("testSubstring", testSubstring),
+            ("testSubstringFullRange", testSubstringFullRange),
+            ("testSubstringToIndex", testSubstringToIndex),
+            ("testSubstringFromIndex", testSubstringFromIndex),
+        ]
+    }
+}
+#endif

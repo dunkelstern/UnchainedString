@@ -13,14 +13,6 @@ import XCTest
 @testable import UnchainedString
 
 class whitespaceTests: XCTestCase {
-    var allTests : [(String, () throws -> Void)] {
-        return [
-            ("testWhitespaceAtBeginning", testWhitespaceAtBeginning),
-            ("testWhitespaceAtEnd", testWhitespaceAtEnd),
-            ("testWhitespaceAtBeginningAndEnd", testWhitespaceAtBeginningAndEnd),
-            ("testNoWhitespace", testNoWhitespace),
-        ]
-    }
     
     func testWhitespaceAtBeginning() throws {
         let s = "\n \t whitespace"
@@ -42,3 +34,16 @@ class whitespaceTests: XCTestCase {
         XCTAssert(s.stringByTrimmingWhitespace() == "whitespace")
     }
 }
+
+#if os(Linux)
+extension whitespaceTests {
+    static var allTests : [(String, whitespaceTests -> () throws -> Void)] {
+        return [
+            ("testWhitespaceAtBeginning", testWhitespaceAtBeginning),
+            ("testWhitespaceAtEnd", testWhitespaceAtEnd),
+            ("testWhitespaceAtBeginningAndEnd", testWhitespaceAtBeginningAndEnd),
+            ("testNoWhitespace", testNoWhitespace),
+        ]
+    }
+}
+#endif

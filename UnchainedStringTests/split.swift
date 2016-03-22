@@ -11,25 +11,6 @@ import XCTest
 @testable import UnchainedString
 
 class splitTests: XCTestCase {
-    var allTests : [(String, () throws -> Void)] {
-        return [
-            ("testJoinWithString", testJoinWithString),
-            ("testJoinWithStringAndEmptyArray", testJoinWithStringAndEmptyArray),
-            ("testJoinWithStringAndSingleItemArray", testJoinWithStringAndSingleItemArray),
-            ("testJoinWithEmptyString", testJoinWithEmptyString),
-            ("testJoinWithEmptyStringAndEmptyArray", testJoinWithEmptyStringAndEmptyArray),
-            ("testJoinWithChar", testJoinWithChar),
-            ("testJoinWithCharAndEmptyArray", testJoinWithCharAndEmptyArray),
-            ("testJoin", testJoin),
-            ("testJoinWithEmptyArray", testJoinWithEmptyArray),
-            ("testSplitByDelimiterChar", testSplitByDelimiterChar),
-            ("testSplitByDelimiterCharAndEmptyString", testSplitByDelimiterCharAndEmptyString),
-            ("testSplitByDelimiterCharMaxsplit", testSplitByDelimiterCharMaxsplit),
-            ("testSplitByDelimiterString", testSplitByDelimiterString),
-            ("testSplitByDelimiterStringAndEmptyString", testSplitByDelimiterStringAndEmptyString),
-            ("testSplitByDelimiterStringMaxsplit", testSplitByDelimiterStringMaxsplit)
-        ]
-    }
     
     func testJoinWithString() throws {
         let result = String.join(["Item 0", "Item 1", "Item 2"], delimiter: ", ")
@@ -138,5 +119,28 @@ class splitTests: XCTestCase {
             XCTAssert(result[2] == "Item 2, Item 3")
         }
     }
-
 }
+
+#if os(Linux)
+extension splitTests {
+    static var allTests : [(String, splitTests -> () throws -> Void)] {
+        return [
+            ("testJoinWithString", testJoinWithString),
+            ("testJoinWithStringAndEmptyArray", testJoinWithStringAndEmptyArray),
+            ("testJoinWithStringAndSingleItemArray", testJoinWithStringAndSingleItemArray),
+            ("testJoinWithEmptyString", testJoinWithEmptyString),
+            ("testJoinWithEmptyStringAndEmptyArray", testJoinWithEmptyStringAndEmptyArray),
+            ("testJoinWithChar", testJoinWithChar),
+            ("testJoinWithCharAndEmptyArray", testJoinWithCharAndEmptyArray),
+            ("testJoin", testJoin),
+            ("testJoinWithEmptyArray", testJoinWithEmptyArray),
+            ("testSplitByDelimiterChar", testSplitByDelimiterChar),
+            ("testSplitByDelimiterCharAndEmptyString", testSplitByDelimiterCharAndEmptyString),
+            ("testSplitByDelimiterCharMaxsplit", testSplitByDelimiterCharMaxsplit),
+            ("testSplitByDelimiterString", testSplitByDelimiterString),
+            ("testSplitByDelimiterStringAndEmptyString", testSplitByDelimiterStringAndEmptyString),
+            ("testSplitByDelimiterStringMaxsplit", testSplitByDelimiterStringMaxsplit)
+        ]
+    }
+}
+#endif

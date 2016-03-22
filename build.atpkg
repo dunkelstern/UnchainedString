@@ -2,7 +2,7 @@
   :name "UnchainedString"
   
   :tasks {
-    :lib {
+    :default {
       :tool "atllbuild"
       :sources ["UnchainedString/**.swift"]
       :name "UnchainedString"
@@ -13,7 +13,7 @@
 
     :unchained-string-tests {
       :tool "atllbuild"
-      :dependencies ["lib"]
+      :dependencies ["default"]
       :sources ["UnchainedStringTests/**.swift"]
       :name "unchained_string_tests"
       :output-type "executable"
@@ -29,7 +29,7 @@
     }
 
     :check {
-      :dependencies ["unchained-string-tests"]
+      :dependencies ["run-tests"]
       :tool "nop"
     }
 
