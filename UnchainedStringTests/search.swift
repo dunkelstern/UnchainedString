@@ -175,6 +175,62 @@ class searchTests: XCTestCase {
         XCTAssertFalse(s.contains(n))
     }
 
+#if false // cannot be tested because it is in foundation which is included implicitly by xctest
+
+    // MARK: Prefix
+    
+    func testHasPrefix() {
+        let s = "Just a string with a . in it"
+        XCTAssertTrue(s.hasPrefix("Just"))
+    }
+    
+    func testHasPrefixNotFound() {
+        let s = "Just a string with a . in it"
+        XCTAssertFalse(s.hasPrefix("Foobar"))
+    }
+
+    func testHasEmptyPrefix() {
+        let s = "Just a string with a . in it"
+        XCTAssertTrue(s.hasPrefix(""))
+    }
+    
+    func testHasTooLongPrefix() {
+        let s = "Just"
+        XCTAssertFalse(s.hasPrefix("Just a long prefix"))
+    }
+
+    func testHasPrefixAlike() {
+        let s = "Just a string with a . in it"
+        XCTAssertFalse(s.hasPrefix("Just a  thing"))
+    }
+    
+    // MARK: Suffix
+
+    func testHasSuffix() {
+        let s = "Just a string with a . in it"
+        XCTAssertTrue(s.hasSuffix("in it"))
+    }
+    
+    func testHasSuffixNotFound() {
+        let s = "Just a string with a . in it"
+        XCTAssertFalse(s.hasSuffix("foobar"))
+    }
+    
+    func testHasEmptySuffix() {
+        let s = "Just a string with a . in it"
+        XCTAssertTrue(s.hasSuffix(""))
+    }
+    
+    func testHasTooLongSuffix() {
+        let s = "Just"
+        XCTAssertFalse(s.hasSuffix("Just a long prefix"))
+    }
+    
+    func testHasSuffixAlike() {
+        let s = "Just a string with a . in it"
+        XCTAssertFalse(s.hasSuffix(". of it"))
+    }
+#endif
 }
 
 #if os(Linux)
@@ -198,7 +254,18 @@ extension searchTests {
             ("testContainsChar", testContainsChar),
             ("testContainsCharNotFound", testContainsCharNotFound),
             ("testContainsString", testContainsString),
-            ("testContainsStringNotFound", testContainsStringNotFound),
+            ("testContainsStringNotFound", testContainsStringNotFound)
+
+            // ("testHasPrefix", testHasPrefix),
+            // ("testHasPrefixNotFound", testHasPrefixNotFound),
+            // ("testHasEmptyPrefix", testHasEmptyPrefix),
+            // ("testHasTooLongPrefix", testHasTooLongPrefix),
+            // ("testHasPrefixAlike", testHasPrefixAlike),
+            // ("testHasSuffix", testHasSuffix),
+            // ("testHasSuffixNotFound", testHasSuffixNotFound),
+            // ("testHasEmptySuffix", testHasEmptySuffix),
+            // ("testHasTooLongSuffix", testHasTooLongSuffix),
+            // ("testHasSuffixAlike", testHasSuffixAlike)
         ]
     }
 }

@@ -144,4 +144,90 @@ public extension String {
     public func contains(char: Character) -> Bool {
         return self.position(char) != nil
     }
+
+#if os(Linux)
+    /// Check if a string has a prefix
+    ///
+    /// - parameter prefix: the prefix to check for
+    /// - returns: true if the prefix was an empty string or the string has the prefix
+    public func hasPrefix(prefix: String) -> Bool {
+        if prefix.characters.count == 0 {
+            // if the prefix has a length of zero every string is prefixed by that
+            return true
+        }
+        if self.characters.count < prefix.characters.count {
+            // if self is shorter than the prefix
+            return false
+        }
+        if prefix.characters.count == 1 {
+            // single char prefix is simple
+            return self.characters.first! == prefix.characters.first!
+        }
+        
+        // quick check if first and last char match
+        if self.characters.first! == prefix.characters.first! && self.characters[self.startIndex.advanced(by: prefix.characters.count - 1)] == prefix.characters.last! {
+            // if prefix length == 2 instantly return true
+            if prefix.characters.count == 2 {
+                return true
+            }
+
+            // match, thorough check
+            var selfIndex = self.startIndex.successor()
+            var prefixIndex = prefix.startIndex.successor()
+
+            // first and last already checked
+            for _ in 1..<(prefix.characters.count - 1) {
+                if self.characters[selfIndex] != prefix.characters[prefixIndex] {
+                    return false
+                }
+                selfIndex = selfIndex.successor()
+                prefixIndex = prefixIndex.successor()
+            }
+            return true
+        }
+        return false
+    }
+    
+    /// Check if a string has a suffix
+    ///
+    /// - parameter suffix: the suffix to check for
+    /// - returns: true if the suffix was an empty string or the string has the suffix
+    public func hasSuffix(suffix: String) -> Bool {
+        if suffix.characters.count == 0 {
+            // if the suffix has a length of zero every string is suffixed by that
+            return true
+        }
+        if self.characters.count < suffix.characters.count {
+            // if self is shorter than the suffix
+            return false
+        }
+        if suffix.characters.count == 1 {
+            // single char prefix is simple
+            return self.characters.last! == suffix.characters.first!
+        }
+        
+        // quick check if first and last char match
+        if self.characters.last! == suffix.characters.last! && self.characters[self.startIndex.advanced(by: self.characters.count - suffix.characters.count)] == suffix.characters.first! {
+            // if suffix length == 2 instantly return true
+            if suffix.characters.count == 2 {
+                return true
+            }
+            
+            // match, thorough check
+            var selfIndex = self.startIndex.advanced(by: self.characters.count - suffix.characters.count + 1)
+            var suffixIndex = suffix.startIndex.successor()
+            
+            // first and last already checked
+            for _ in 1..<(suffix.characters.count - 1) {
+                if self.characters[selfIndex] != suffix.characters[suffixIndex] {
+                    return false
+                }
+                selfIndex = selfIndex.successor()
+                suffixIndex = suffixIndex.successor()
+            }
+            return true
+        }
+        return false
+    }
+#endif
 }
